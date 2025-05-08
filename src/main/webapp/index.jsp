@@ -38,22 +38,7 @@
 			//Se añade el texto a la etiqueta <a>
 			a.appendChild(linkText);
 			aEditar.appendChild(linkTextEditar);
-			aEditar.onclick= function(){
-				$.ajax({
-				    url: 'rest/persona/get-persona/' + id, //Url a ejecutar
-				    type: 'GET', //Método a invocar
-				    dataType: "json", //Tipo de dato enviado
-				    success: function(result) {
-				    	$("#id").attr("value", result.id);
-				    	$("#nombre").attr("value", result.nombre);
-				    	$("#apellido1").attr("value", result.nombre);
-				    	$("#apellido2").attr("value", result.nombre);
-				    },
-			    	error: function(jqXhr, textStatus, errorMessage){
-				    	alert('error');	
-				    }
-				});
-			}
+			aEditar.onclick= cargaDatosUsuario.bind(this,[id]);
 			
 			
 	
@@ -72,43 +57,102 @@
 			$('#personas').append(entry);
 			
 		}
+		
+		function cargaDatosUsuario(idUsuario){
+			$.ajax({
+			    url: 'rest/persona/get-persona/' + idUsuario, //Url a ejecutar
+			    type: 'GET', //Método a invocar
+			    dataType: "json", //Tipo de dato enviado
+			    success: function(result) {
+			    	$("#id").val(result.id);
+			    	$("#nombre").val(result.nombre);
+			    	$("#apellido1").val(result.apellido1);
+			    	$("#apellido2").val(result.apellido2);
+			    },
+		    	error: function(jqXhr, textStatus, errorMessage){
+			    	alert('error');	
+			    }
+			});
+		}
+
+		
+		function reemplazaUsuario(id, nombre, apellido1, apellido2){
+			
+		}
+
+		function limpiaFormulario(){
+			$(":input").each=function(){
+				$(this).val("");
+			};
+		}
+		
+		
+		//Se añade la función que se ejecutará al hacer clic sobre el botón identificado por "crearUsuario"
+		$("#editarUsuario").click(function(){
+			
+			//Se construye el JSON a enviar {"id":"valor","name":"valor","surname":"valor"}
+			//no se ponen las comillas porque la función JSON.stringify ya lo hace.
+			var personaInfo = {id: $('#id').val(),nombre: $('#nombre').val(),apellido1: $('#apellido1').val(), apellido2: $("#apellido2").val()};
+			
+		    $.ajax({
+		    		data: JSON.stringify(personaInfo),
+				    url: 'rest/persona/alta-usuario', //URL a la que invocar					    
+				    headers: { 
+			               'Accept': 'application/json',
+			               'Content-Type': 'application/json' 
+			           },
+				    type: 'POST', //Método del servicio rest a ejecutar
+				    dataType: "json", 
+				    success: function(result) {
+				    	//Esta función se ejecuta si la petición ha ido bien. El cuerpo de la respuesta HTTP
+				    	//se recibe en el parámetro 'result'
+				    	//Ejemplo JSON respuesta --> {"persona":{"apellido1":"García","apellido2": "Sánchez","nombre":"Juan","id":"34"}}
+				    	
+				    	//Se llama a la función que añade el elemento a la lista.
+				    	var idElemento = "#" + personaInfo.id;
+				    	$(idElemento).text("Prueba");limpiaFormulario();			    
+				    },
+			    	error: function(jqXhr, textStatus, errorMessage){
+				    	alert('Error: ' + jqXhr.responseJSON.resultado);	
+				    }
+				    
+				});
+		    });
+	
+			$("#crearUsuario").click(function(){
+			
+			//Se construye el JSON a enviar {"id":"valor","name":"valor","surname":"valor"}
+			//no se ponen las comillas porque la función JSON.stringify ya lo hace.
+			var personaInfo = {id: $('#id').val(),nombre: $('#nombre').val(),apellido1: $('#apellido1').val(), apellido2: $("#apellido2").val()};
+			
+		    $.ajax({
+		    		data: JSON.stringify(personaInfo),
+				    url: 'rest/persona/alta-usuario', //URL a la que invocar					    
+				    headers: { 
+			               'Accept': 'application/json',
+			               'Content-Type': 'application/json' 
+			           },
+				    type: 'POST', //Método del servicio rest a ejecutar
+				    dataType: "json", 
+				    success: function(result) {
+				    	//Esta función se ejecuta si la petición ha ido bien. El cuerpo de la respuesta HTTP
+				    	//se recibe en el parámetro 'result'
+				    	//Ejemplo JSON respuesta --> {"persona":{"apellido1":"García","apellido2": "Sánchez","nombre":"Juan","id":"34"}}
+				    	
+				    	//Se llama a la función que añade el elemento a la lista.
+				    	load(result.persona.id, result.persona.nombre, result.persona.apellido1);
+				    	limpiaFormulario();			    
+				    },
+			    	error: function(jqXhr, textStatus, errorMessage){
+				    	alert('Error: ' + jqXhr.responseJSON.resultado);	
+				    }
+				    
+				});
+		    });
 	
 		//Cuando el documento está cargado en el navegador se ejecuta esta función.
-		$(document).ready(function(){
-			
-			
-			//Se añade la función que se ejecutará al hacer clic sobre el botón identificado por "crearUsuario"
-			$("#crearUsuario").click(function(){
-				
-				//Se construye el JSON a enviar {"id":"valor","name":"valor","surname":"valor"}
-				//no se ponen las comillas porque la función JSON.stringify ya lo hace.
-				var personaInfo = {id: $('#id').val(),nombre: $('#nombre').val(),apellido1: $('#apellido1').val(), apellido2: $("#apellido2").val()};
-				
-			    $.ajax({
-			    		data: JSON.stringify(personaInfo),
-					    url: 'rest/persona/alta-usuario', //URL a la que invocar					    
-					    headers: { 
-				               'Accept': 'application/json',
-				               'Content-Type': 'application/json' 
-				           },
-					    type: 'POST', //Método del servicio rest a ejecutar
-					    dataType: "json", 
-					    success: function(result) {
-					    	//Esta función se ejecuta si la petición ha ido bien. El cuerpo de la respuesta HTTP
-					    	//se recibe en el parámetro 'result'
-					    	//Ejemplo JSON respuesta --> {"persona":{"apellido1":"García","apellido2": "Sánchez","nombre":"Juan","id":"34"}}
-					    	
-					    	//Se llama a la función que añade el elemento a la lista.
-					    	load(result.persona.id, result.persona.nombre, result.persona.apellido1);
-					    },
-				    	error: function(jqXhr, textStatus, errorMessage){
-					    	alert('Error: ' + jqXhr.responseJSON.resultado);	
-					    }
-					    
-					});
-			    });
+		$(document).ready(function(){		
 		
-			
 			//Se invoca la petición REST que devuelve todos los usuarios y se cargan dentro del <ul> de la página.
 			$.ajax({
 			    url: 'rest/persona/todos',
@@ -131,17 +175,20 @@
 <br>
 <a href="rest/persona/getDatosPersona">Llamada Get</a>
 	Formulario para insertar un nuevo usuario.<br>
-	Id:<input type=text id="id"><br>
-	Nombre:<input type=text id="nombre"><br>
-	Apellido1:<input type=text id="apellido1"><br>
-	Apellido2:<input type=text id="apellido2"><br>
+	Id:<input type=text id="id" class="usuario-form"><br>
+	Nombre:<input type=text id="nombre" class="usuario-form"><br>
+	Apellido1:<input type=text id="apellido1" class="usuario-form"><br>
+	Apellido2:<input type=text id="apellido2" class="usuario-form"><br>
+	Dni:<input type=text id="dni" class="usuario-form"><br>
 	<button id="crearUsuario">Crear</button>
 	<button id="editarUsuario">Guarda Usuario Editado</button>
+	<button id="limpiar" onClick="limpiaFormulario();">Limpiar Formulario</button>
 
 <br>
 	Listado de usuarios creados
 	<br>
-	<ul id="personas"></ul>
+	<ul id="personas">
+	</ul>
 
 </body>
 </html>

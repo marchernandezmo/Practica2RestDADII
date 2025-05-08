@@ -57,7 +57,7 @@ public class PersonaService {
 			personaJSON.put("id", personaEncontrada.getId());
 			personaJSON.put("nombre", personaEncontrada.getNombre());
 			personaJSON.put("apellido1", personaEncontrada.getApellido1());
-			personaJSON.put("apellido2", personaEncontrada.getApellido1());
+			personaJSON.put("apellido2", personaEncontrada.getApellido2());
 			return Response.status(200).entity(personaJSON.toString()).build();
 		} else {
 			return Response.status(404).entity(personaJSON.toString()).build();
