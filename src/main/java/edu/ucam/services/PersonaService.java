@@ -14,6 +14,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -24,20 +25,6 @@ import jakarta.ws.rs.core.Response;
 public class PersonaService {
 		
 	public static List<Persona> personaList = new ArrayList<Persona>();
-	
-	@GET
-	@Path("/getDatosPersona")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getDameDatosPersona() {
-		return "HOLA...";
-	}
-	
-	@GET
-	@Path("/getSaludo/{nombre}/{apellido}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getSaludoConParametros(@PathParam("nombre") String nombre, @PathParam("apellido") String apellido) {
-		return "Bienvenido Sr/a: " + nombre + ", " + apellido;
-	}
 	
 	
 	@GET
@@ -84,6 +71,57 @@ public class PersonaService {
 		return Response.status(200).entity(respuestaPersonas.toString()).build();
 	}
 	
+	@PUT
+	@Path("/modifica-usuario")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateUsuario(InputStream incomingData) {
+		//Recuperamos el String correspondiente al JSON que nos envia el navegador
+				StringBuilder sb = new StringBuilder();
+				try {
+					BufferedReader in = new BufferedReader(new InputStreamReader(incomingData));
+					String line = null;
+					while ((line = in.readLine()) != null) {
+						sb.append(line);
+					}
+				} catch (Exception e) {
+					System.out.println("Error Parsing: - ");
+				}
+					
+				
+				//Construimos un objeto JSON en base al recibido como cadena 
+				//así es más fácil recuperar los valores
+				JSONObject jsonRecibido = new JSONObject(sb.toString());
+				
+				Persona persona = new Persona();
+				persona.setNombre(jsonRecibido.getString("nombre"));
+				persona.setApellido1(jsonRecibido.getString("apellido1"));
+				persona.setApellido2(jsonRecibido.getString("apellido2"));
+				
+				if(jsonRecibido.getString("id").isEmpty()) {
+					return Response.status(409).entity("No tiene ID").build();
+				} else {
+					persona.setId(jsonRecibido.getInt("id"));
+					for(int indice = 0; indice < personaList.size(); indice++) {
+						if(personaList.get(indice).getId() == persona.getId()) {
+							personaList.set(indice, persona);
+						}
+					}
+					JSONObject jsonRespuesta = new JSONObject();
+					
+					JSONObject userJSON = new JSONObject();
+					
+					userJSON.put("id", persona.getId());
+					userJSON.put("nombre", persona.getNombre());
+					userJSON.put("apellido1", persona.getApellido1());
+					userJSON.put("apellido2", persona.getApellido2());
+					
+					//Se añade el JSON  a la respuesta
+					jsonRespuesta.put("persona", userJSON);
+					
+					return Response.status(201).entity(jsonRespuesta.toString()).build();
+				}
+	}
 	
 	@POST	
 	@Path("/alta-usuario")
@@ -110,13 +148,16 @@ public class PersonaService {
 		JSONObject jsonRecibido = new JSONObject(sb.toString());
 		
 		Persona persona = new Persona();
-		if(jsonRecibido.has("id")) {
-			persona.setId(jsonRecibido.getInt("id"));
-			System.out.println("Hemos recibido Id");
-		}
 		persona.setNombre(jsonRecibido.getString("nombre"));
 		persona.setApellido1(jsonRecibido.getString("apellido1"));
 		persona.setApellido2(jsonRecibido.getString("apellido2"));
+		int maxId = 0;
+		for (Persona p : personaList) {
+		    if (p.getId() > maxId) {
+		        maxId = p.getId();
+		    }
+		}
+		persona.setId(maxId+1);
 		personaList.add(persona);
 		
 		
@@ -149,7 +190,9 @@ public class PersonaService {
 		if(personaEncontrada == null)
 			return Response.status(409).entity("error").build();
 		else {
+			System.out.println("Encontrada");
 			personaList.remove(personaEncontrada);
+			System.out.println(personaList.size());
 			return Response.status(201).entity(true).build();
 		}
 	}
