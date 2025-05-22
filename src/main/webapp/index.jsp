@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -216,7 +216,7 @@
 	Nombre:<input type=text id="nombre" class="usuario-form"><br>
 	Apellido1:<input type=text id="apellido1" class="usuario-form"><br>
 	Apellido2:<input type=text id="apellido2" class="usuario-form"><br>
-	Dni:<input type=text id="dni" class="usuario-form"><br>
+	DNI:<input type=text id="dni" class="usuario-form"><br>
 	<button id="guardar">Guardar</button>
 	<button id="limpiar">Limpiar Formulario</button>
 
