@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="Marc Hernández Montesinos">
-<title>Rest Básico</title>
+<title>Práctica 2 - DAD II - Marc Hernández</title>
 <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 	
