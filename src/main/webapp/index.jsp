@@ -3,26 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="Marc Hern·ndez Montesinos">
-<title>Rest B·sico</title>
+<meta name="author" content="Marc Hern√°ndez Montesinos">
+<title>Pr√°ctica 2 - DAD II - Marc Hern√°ndez</title>
 <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 	
-		//Esta funciÛn aÒade un elemento a la lista de usuarios. 
+		//Esta funci√≥n a√±ade un elemento a la lista de usuarios. 
 		function load(id,name,surname){
-			//Crea el nuevo elemento 'li' que contendr· los datos del usuario.
+			//Crea el nuevo elemento 'li' que contendr√° los datos del usuario.
 			var entry = document.createElement('li');
 			
-			//Crea un elemento que ser· el enlace para borrar el usuario creado.
+			//Crea un elemento que ser√° el enlace para borrar el usuario creado.
 			var a = document.createElement('a');
-			//Se aÒade el evento que se ejecutar· al hacer clic sobre borrar.
+			//Se a√±ade el evento que se ejecutar√° al hacer clic sobre borrar.
 			a.onclick = function () {
 				$.ajax({
 				    url: 'rest/persona/borra/' + id, //Url a ejecutar
-				    type: 'DELETE', //MÈtodo a invocar
+				    type: 'DELETE', //M√©todo a invocar
 				    dataType: "json", //Tipo de dato enviado
 				    success: function(result) {
-				    	//FunciÛn que se ejecuta si todo ha ido bien. En este caso, quitar el <li> que se creÛ para mostrar
+				    	//Funci√≥n que se ejecuta si todo ha ido bien. En este caso, quitar el <li> que se cre√≥ para mostrar
 				    	//el usuario insertado.
 				    	document.getElementById(id).remove();
 				    },
@@ -37,7 +37,7 @@
 			//Texto del enlace para borrar el usuario
 			var linkText = document.createTextNode(" [Borrar]");
 			var linkTextEditar = document.createTextNode(" [Editar]");		
-			//Se aÒade el texto a la etiqueta <a>
+			//Se a√±ade el texto a la etiqueta <a>
 			a.appendChild(linkText);
 			aEditar.appendChild(linkTextEditar);
 			aEditar.onclick= cargaDatosUsuario.bind(this,[id]);
@@ -45,10 +45,10 @@
 			
 	
 			
-			//Se identifica el <li> con el id del usuario creado. AsÌ se podr· recuperar en el futuro para eliminarlo.
+			//Se identifica el <li> con el id del usuario creado. As√≠ se podr√° recuperar en el futuro para eliminarlo.
 			entry.id = id;		
 			
-			//Se aÒade texto al <li>
+			//Se a√±ade texto al <li>
 			entry.appendChild(document.createTextNode("("+ id + ") " +name + " " + surname));
 			
 			//Se pone como hijo de <li> el enlace <a> creado anteriormente  
@@ -70,7 +70,7 @@
 		function cargaDatosUsuario(idUsuario){
 			$.ajax({
 			    url: 'rest/persona/get-persona/' + idUsuario, //Url a ejecutar
-			    type: 'GET', //MÈtodo a invocar
+			    type: 'GET', //M√©todo a invocar
 			    dataType: "json", //Tipo de dato enviado
 			    success: function(result) {
 			    	$("#id").val(result.id);
@@ -90,18 +90,18 @@
 			});
 		}
 		
-		//Cuando el documento est· cargado en el navegador se ejecuta esta funciÛn.
+		//Cuando el documento est√° cargado en el navegador se ejecuta esta funci√≥n.
 		$(document).ready(function(){	
 			$("#limpiar").click(function(){
 				console.log("Vamos a limpiar");
 				limpiaFormulario();
 			});
 		
-			//Se aÒade la funciÛn que se ejecutar· al hacer clic sobre el botÛn identificado por "crearUsuario"
+			//Se a√±ade la funci√≥n que se ejecutar√° al hacer clic sobre el bot√≥n identificado por "crearUsuario"
 			$("#editarUsuario").click(function(){
 				
 				//Se construye el JSON a enviar {"id":"valor","name":"valor","surname":"valor"}
-				//no se ponen las comillas porque la funciÛn JSON.stringify ya lo hace.
+				//no se ponen las comillas porque la funci√≥n JSON.stringify ya lo hace.
 				var personaInfo = {id: $('#id').val(),nombre: $('#nombre').val(),apellido1: $('#apellido1').val(), apellido2: $("#apellido2").val()};
 				
 			    $.ajax({
@@ -111,14 +111,14 @@
 				               'Accept': 'application/json',
 				               'Content-Type': 'application/json' 
 				           },
-					    type: 'POST', //MÈtodo del servicio rest a ejecutar
+					    type: 'POST', //M√©todo del servicio rest a ejecutar
 					    dataType: "json", 
 					    success: function(result) {
-					    	//Esta funciÛn se ejecuta si la peticiÛn ha ido bien. El cuerpo de la respuesta HTTP
-					    	//se recibe en el par·metro 'result'
-					    	//Ejemplo JSON respuesta --> {"persona":{"apellido1":"GarcÌa","apellido2": "S·nchez","nombre":"Juan","id":"34"}}
+					    	//Esta funci√≥n se ejecuta si la petici√≥n ha ido bien. El cuerpo de la respuesta HTTP
+					    	//se recibe en el par√°metro 'result'
+					    	//Ejemplo JSON respuesta --> {"persona":{"apellido1":"Garc√≠a","apellido2": "S√°nchez","nombre":"Juan","id":"34"}}
 					    	
-					    	//Se llama a la funciÛn que aÒade el elemento a la lista.
+					    	//Se llama a la funci√≥n que a√±ade el elemento a la lista.
 					        //Borramos el elemento y lo cargamos
 					        load(result.persona.id, result.persona.nombre, result.persona.apellido1);
 					    	limpiaFormulario();			    
@@ -134,9 +134,9 @@
 			$("#guardar").click(function(){
 				
 				//Se construye el JSON a enviar {"id":"valor","name":"valor","surname":"valor"}
-				//no se ponen las comillas porque la funciÛn JSON.stringify ya lo hace.
+				//no se ponen las comillas porque la funci√≥n JSON.stringify ya lo hace.
 				var personaInfo = {id: $('#id').val(),nombre: $('#nombre').val(),apellido1: $('#apellido1').val(), apellido2: $("#apellido2").val()};
-				//comprobamos id, si no tiene id es un alta y hacemos un POST, en caso  contrario es una modificaciÛn y hacemos un PUT
+				//comprobamos id, si no tiene id es un alta y hacemos un POST, en caso  contrario es una modificaci√≥n y hacemos un PUT
 				if(!$('#id').val()){
 					$.ajax({
 			    		data: JSON.stringify(personaInfo),
@@ -145,14 +145,14 @@
 				               'Accept': 'application/json',
 				               'Content-Type': 'application/json' 
 				           },
-					    type: 'POST', //MÈtodo del servicio rest a ejecutar
+					    type: 'POST', //M√©todo del servicio rest a ejecutar
 					    dataType: "json", 
 					    success: function(result) {
-					    	//Esta funciÛn se ejecuta si la peticiÛn ha ido bien. El cuerpo de la respuesta HTTP
-					    	//se recibe en el par·metro 'result'
-					    	//Ejemplo JSON respuesta --> {"persona":{"apellido1":"GarcÌa","apellido2": "S·nchez","nombre":"Juan","id":"34"}}
+					    	//Esta funci√≥n se ejecuta si la petici√≥n ha ido bien. El cuerpo de la respuesta HTTP
+					    	//se recibe en el par√°metro 'result'
+					    	//Ejemplo JSON respuesta --> {"persona":{"apellido1":"Garc√≠a","apellido2": "S√°nchez","nombre":"Juan","id":"34"}}
 					    	
-					    	//Se llama a la funciÛn que aÒade el elemento a la lista.
+					    	//Se llama a la funci√≥n que a√±ade el elemento a la lista.
 					    	load(result.persona.id, result.persona.nombre, result.persona.apellido1);
 					    	limpiaFormulario();			    
 					    },
@@ -169,14 +169,14 @@
 				               'Accept': 'application/json',
 				               'Content-Type': 'application/json' 
 				           },
-					    type: 'PUT', //MÈtodo del servicio rest a ejecutar
+					    type: 'PUT', //M√©todo del servicio rest a ejecutar
 					    dataType: "json", 
 					    success: function(result) {
-					    	//Esta funciÛn se ejecuta si la peticiÛn ha ido bien. El cuerpo de la respuesta HTTP
-					    	//se recibe en el par·metro 'result'
-					    	//Ejemplo JSON respuesta --> {"persona":{"apellido1":"GarcÌa","apellido2": "S·nchez","nombre":"Juan","id":"34"}}
+					    	//Esta funci√≥n se ejecuta si la petici√≥n ha ido bien. El cuerpo de la respuesta HTTP
+					    	//se recibe en el par√°metro 'result'
+					    	//Ejemplo JSON respuesta --> {"persona":{"apellido1":"Garc√≠a","apellido2": "S√°nchez","nombre":"Juan","id":"34"}}
 					    	
-					    	//Se llama a la funciÛn que aÒade el elemento a la lista.
+					    	//Se llama a la funci√≥n que a√±ade el elemento a la lista.
 					    	load(result.persona.id, result.persona.nombre, result.persona.apellido1);
 					    	limpiaFormulario();			    
 					    },
@@ -190,14 +190,14 @@
 			    });
 			
 			
-			//Se invoca la peticiÛn REST que devuelve todos los usuarios y se cargan dentro del <ul> de la p·gina.
+			//Se invoca la petici√≥n REST que devuelve todos los usuarios y se cargan dentro del <ul> de la p√°gina.
 			$.ajax({
 			    url: 'rest/persona/todos',
 			    type: 'GET',
 			    dataType: "json",
 			    success: function(result) {
-			    	//Para cada elemento del array de result.personas se ejecuta la funciÛn que se pasa como par·metro.
-			    	//Esa funciÛn tiene dos par·metros, i para la posiciÛn y val para el valor del elemento en curso.
+			    	//Para cada elemento del array de result.personas se ejecuta la funci√≥n que se pasa como par√°metro.
+			    	//Esa funci√≥n tiene dos par√°metros, i para la posici√≥n y val para el valor del elemento en curso.
 			    	jQuery.each(result.personas, function(i, val) {
 			    		  load(val.id, val.nombre, val.apellido1);
 			    	});
