@@ -1,0 +1,39 @@
+//Cargar JSON  en Servicio REST
+StringBuilder sb = new StringBuilder();
+try {
+	BufferedReader in = new BufferedReader(new InputStreamReader(incomingData));
+	String line = null;
+	while ((line = in.readLine()) != null) {
+		sb.append(line);
+	}
+} catch (Exception e) {
+	System.out.println("Error Parsing: - ");
+}
+
+JSONObject jsonRecibido = new JSONObject(sb.toString());
+
+
+Algunas anotaciones REST que pueden ser de utilidad:
+@Path("/path/{pathparam}")
+@DefaultValue("true") @QueryParam("min") boolean hasMin;
+@Produces(MediaType.TEXT_PLAIN)
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+@PathParam("username") String userName
+@FormParam("id") int id
+@GET, @POST, @PUT, @DELETE
+JSONObject json = new JSONObject();
+JSONObject json = new JSONObject(“String con json”);
+json.put("nombreAtributo", valor);
+json.append("nombreAtributo", valor);
+json.toString();
+siendo incomingData un parámetro de tipo InputStream
+StringBuilder sb = new StringBuilder();
+try {
+BufferedReader in =
+new BufferedReader(new InputStreamReader(incomingData));
+String line = null;
+while ((line = in.readLine()) != null) {
+sb.append(line);
+}
+} catch (Exception e) { System.out.println("Error Parsing: - "); }
