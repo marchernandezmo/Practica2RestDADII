@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+  <Resource name="jdbc/7691344_practica1_dad2" auth="Container" type="javax.sql.DataSource"
+            maxTotal="100" maxIdle="30" maxWaitMillis="10000"
+            username="USUARIO_ADMIN" password="CLAVE_ADMIN"
+            driverClassName="com.mysql.cj.jdbc.Driver"
+            url="jdbc:mysql://BBDD.marchernandez.es:3306/7691344_practica1_dad2?useSSL=false&amp;serverTimezone=UTC"/>
+</Context>
