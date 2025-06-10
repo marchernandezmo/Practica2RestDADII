@@ -1,0 +1,17 @@
+Se necesita la creación de un CRUD de Artículos, los artículos se componen de los siguientes atributos:
+id: int,
+nombre: String,
+precio: double,
+oferta:boolean,
+stock: int
+Para dar de alta un articulo, se necesitará que tenga mínimo un nombre y un precio.
+El id se asignará de forma automática al crear un articulo (autoincremental).
+NO SE PUEDE CREAR un articulo con precio negativo
+No se podrán crear artículos con el mismo nombre.
+El listado de los artículos tiene que ser ordenados por nombre.
+Se necesita:
+Crear Artículos
+Listar artículos
+Devolver un articulo
+Borrar un Artículo
+Modificar un articulo
