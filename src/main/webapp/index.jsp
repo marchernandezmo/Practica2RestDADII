@@ -12,27 +12,17 @@
     <h2>
         <c:choose>
             <c:when test="${not empty sessionScope.usuario}">
-                ¡Bienvenid@ de nuevo a la reserva de espacios de MaHerMo, ${sessionScope.usuario.usuario}!
+                ¡Bienvenid@ de nuevo a la reserva de espacios de MaHerMo a través de REST, ${sessionScope.usuario.usuario}!
             </c:when>
             <c:otherwise>
-                Bienvenid@ a la reserva de espacios de MaHerMo
+                Bienvenid@ a la reserva de espacios de MaHerMo a través de REST
             </c:otherwise>
         </c:choose>
     </h2>
     <ul>
-        <c:choose>
-            <c:when test="${not empty sessionScope.usuario}">
-                <li><a href="${pageContext.request.contextPath}/jsp/logout.jsp">Cerrar sesi&oacute;n</a></li>
-            </c:when>
-            <c:otherwise>
-                <li><a href="${pageContext.request.contextPath}/jsp/login.jsp">Iniciar sesi&oacute;n</a></li>
-            </c:otherwise>
-        </c:choose>
-        <li><a href="${pageContext.request.contextPath}/espaciocrud">Listar espacios</a></li>
-        <c:if test="${not empty sessionScope.usuario}">
-            <li><a href="${pageContext.request.contextPath}/reservacrud">Mis reservas</a></li>
-        </c:if>
-        <li><a href="${pageContext.request.contextPath}/usercrud">Listar usuarios</a></li>
+		<li><a href="jsp/espacios.jsp">Gestión de Espacios</a></li>
+		<li><a href="jsp/reservas.jsp">Gestión de Reservas</a></li>
+		<li><a href="jsp/logout.jsp">Cerrar sesión</a></li>
     </ul>
 </body>
 </html>

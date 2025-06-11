@@ -101,4 +101,12 @@ public class UserDAO {
         }
         return user;
     }
+    
+    public User validarUsuario(String nombre, String contrasenya) {
+        User u = obtenerUsuarioPorNombreDeUsuario(nombre);
+        if (u != null && u.getContrasenya().equals(contrasenya)) {
+            return u;
+        }
+        return null;
+    }
 }
