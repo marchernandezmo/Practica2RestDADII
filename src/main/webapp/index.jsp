@@ -20,19 +20,7 @@
         </c:choose>
     </h2>
     <ul>
-        <c:choose>
-            <c:when test="${not empty sessionScope.usuario}">
-                <li><a href="${pageContext.request.contextPath}/jsp/logout.jsp">Cerrar sesi&oacute;n</a></li>
-            </c:when>
-            <c:otherwise>
-                <li><a href="${pageContext.request.contextPath}/jsp/login.jsp">Iniciar sesi&oacute;n</a></li>
-            </c:otherwise>
-        </c:choose>
-        <li><a href="${pageContext.request.contextPath}/espaciocrud">Listar espacios</a></li>
-        <c:if test="${not empty sessionScope.usuario}">
-            <li><a href="${pageContext.request.contextPath}/reservacrud">Mis reservas</a></li>
-        </c:if>
-        <li><a href="${pageContext.request.contextPath}/usercrud">Listar usuarios</a></li>
+        <li><a href="index.jsp">Inicio (REST)</a></li>
     </ul>
     <h1>Espacios Disponibles</h1>
     <ul id="lista-espacios"></ul>

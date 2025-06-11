@@ -2,7 +2,6 @@ package edu.mahermo.rest;
 
 import edu.mahermo.dao.EspacioDAO;
 import edu.mahermo.model.Espacio;
-import jakarta.ws.rs.*;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
