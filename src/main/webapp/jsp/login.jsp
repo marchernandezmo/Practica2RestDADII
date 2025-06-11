@@ -28,18 +28,22 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <c:if test="${not empty error}">
       <p style="color: red">${error}</p>
     </c:if>
+    <div id="error" style="color:red; margin-top:1em;"></div>
     <br />
     <a href="${pageContext.request.contextPath}/index.jsp">Volver al Inicio</a>
+    
     <script>
-      document
-        .getElementById("loginForm")
-        .addEventListener("submit", function (e) {
+	    const context = window.location.pathname.split('/')[1];
+		const base = window.location.origin + '/' + context;
+    
+      document.getElementById("loginForm").addEventListener("submit", function (e) {
           e.preventDefault();
           const usuario = document.getElementById("usuario").value;
           const contrasenya = document.getElementById("contrasenya").value;
           fetch("/practica2-marc/api/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "same-origin",
             body: JSON.stringify({ usuario, contrasenya }),
           })
             .then((resp) => {
@@ -48,7 +52,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
             })
             .then((user) => {
               // Si existe el usuario, redirige a index.jsp:
-              window.location.href = "index.jsp";
+            	window.location.href = base + "/index.jsp";
             })
             .catch((err) => {
               document.getElementById("error").textContent = err.message;

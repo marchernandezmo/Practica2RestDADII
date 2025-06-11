@@ -20,7 +20,9 @@
         </c:choose>
     </h2>
     <ul>
-        <li><a href="index.jsp">Inicio (REST)</a></li>
+		<li><a href="jsp/espacios.jsp">Gestión de Espacios</a></li>
+		<li><a href="jsp/reservas.jsp">Gestión de Reservas</a></li>
+		<li><a href="jsp/logout.jsp">Cerrar sesión</a></li>
     </ul>
     <h1>Espacios Disponibles</h1>
     <ul id="lista-espacios"></ul>
