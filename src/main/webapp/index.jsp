@@ -34,5 +34,7 @@
         </c:if>
         <li><a href="${pageContext.request.contextPath}/usercrud">Listar usuarios</a></li>
     </ul>
+    <h1>Espacios Disponibles</h1>
+    <ul id="lista-espacios"></ul>
 </body>
 </html>
