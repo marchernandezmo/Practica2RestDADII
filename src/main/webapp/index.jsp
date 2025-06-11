@@ -12,10 +12,10 @@
     <h2>
         <c:choose>
             <c:when test="${not empty sessionScope.usuario}">
-                ¡Bienvenid@ de nuevo a la reserva de espacios de MaHerMo, ${sessionScope.usuario.usuario}!
+                ¡Bienvenid@ de nuevo a la reserva de espacios de MaHerMo a través de REST, ${sessionScope.usuario.usuario}!
             </c:when>
             <c:otherwise>
-                Bienvenid@ a la reserva de espacios de MaHerMo
+                Bienvenid@ a la reserva de espacios de MaHerMo a través de REST
             </c:otherwise>
         </c:choose>
     </h2>
@@ -24,7 +24,5 @@
 		<li><a href="jsp/reservas.jsp">Gestión de Reservas</a></li>
 		<li><a href="jsp/logout.jsp">Cerrar sesión</a></li>
     </ul>
-    <h1>Espacios Disponibles</h1>
-    <ul id="lista-espacios"></ul>
 </body>
 </html>

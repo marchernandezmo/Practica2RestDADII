@@ -2,13 +2,20 @@ package edu.mahermo.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Reserva {
     private int id;
     private int espacioId;
     private int usuarioId;
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime fechaHoraInicio;
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime fechaHoraFin;
-    private String estado; // Los estados de la reserva los siguientes: "activa" o "cancelada". 
+    
+    private String estado; // Los estados de la reserva son los siguientes: "activa" o "cancelada". 
     
     private String nombreEspacio;
     private String nombreUsuario;
